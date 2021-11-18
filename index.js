@@ -1,29 +1,48 @@
-let button = document.querySelector("#submitButton");
-
 // A number is interesting if it is has atleast 2 of the following:
 // prime,
 // ends in 1 or 5,
 // sum of digits is a multiple of 10,
 // all digits are multiples of 3 or 5
-function isInteresting(n) {
+
+
+// Refactors made: 3
+
+// let button = document.querySelector("#submitButton");
+
+const isPrimeCheck = (n) => {
     let isPrime = true;
-    let sumTen = false;
-    let endsInOneOrFive = false;
-    let multiplesFiveOrThree = true;
 
     for (let i = n - 1; i > 1; --i) {
         if (n % i === 0) {
             isPrime = false;
-            break;
+            break
         }
     }
+
+    return isPrime;
+}
+
+function isInteresting(n) {
+
+    let sumTen = false;
+    let endsInOneOrFive = false;
+    let multiplesFiveOrThree = true;
+    let isPrime = isPrimeCheck(n);
+    // for (let i = n - 1; i > 1; --i) {
+    //     if (n % i === 0) {
+    //         isPrime = false;
+    //         break
+    //     }
+    // }
 
     let sum = 0;
     let stringified = n.toString();
     for (let i = 0; i < stringified.length; ++i) {
         sum += parseInt(stringified[i]);
     }
-    if (sum % 10 === 0) sumTen = true;
+    if (sum % 10 === 0) {
+        sumTen = true;
+    }
 
     if (n % 10 === 1 || n % 10 === 5) {
         endsInOneOrFive = true;
@@ -49,7 +68,7 @@ function isInteresting(n) {
     console.log("COUNT: ", count);
 
     if (count > 1) {
-        return n + " is intersting";
+        return n + " is interesting";
     } else if (count > 0) {
         return n + " is okay";
     } else {
@@ -57,7 +76,8 @@ function isInteresting(n) {
     }
 }
 
-button.addEventListener("click", () => {
+// document.addEventListener("click", () => {
+document.querySelector("#submitButton").addEventListener("click", () => {
     let input = document.querySelector("#numberInput");
     let value = parseInt(input.value);
 
@@ -71,14 +91,13 @@ document.querySelector("#primeButton").addEventListener("click", () => {
     let input = document.querySelector("#primeInput");
     let n = parseInt(input.value);
 
-    isPrime = true;
-
-    for (let i = n - 1; i > 1; --i) {
-        if (n % i === 0) {
-            isPrime = false;
-            break;
-        }
-    }
+    let isPrime = isPrimeCheck(n);
+    // for (let i = n - 1; i > 1; --i) {
+    //     if (n % i === 0) {
+    //         isPrime = false;
+    //         break
+    //     }
+    // }
 
     const output = document.querySelector("#primeOutput");
     if (isPrime) {
