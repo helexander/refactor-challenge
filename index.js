@@ -10,16 +10,45 @@
 // let button = document.querySelector("#submitButton");
 
 const isPrimeCheck = (n) => {
-    let isPrime = true;
+    const MAX = Math.sqrt(n);
 
-    for (let i = n - 1; i > 1; --i) {
+    for (let i = 2; i < MAX; ++i) {
         if (n % i === 0) {
-            isPrime = false;
-            break
+            return false;
         }
     }
 
-    return isPrime;
+    return true;
+
+    // let isPrime = true;
+
+    // for (let i = n - 1; i > 1; --i) {
+    //     if (n % i === 0) {
+    //         isPrime = false;
+    //         break
+    //     }
+    // }
+
+    // return isPrime;
+}
+
+function sumTen(n) {
+    // const stringified = n.toString();
+
+    // const sum = stringified.split('').reduce((a, b) => a + parseInt(b), 0);
+
+    // if (sum % 10 === 0) return true; 
+
+    // return false;
+
+    let sum = 0;
+    while (n > 0) {
+        const r = n % 10;
+        n = (n - r) / 10;
+        sum += r;
+    }
+
+    return !(sum % 10);
 }
 
 function isInteresting(n) {
@@ -36,33 +65,26 @@ function isInteresting(n) {
     // }
 
     let sum = 0;
-    let stringified = n.toString();
-    for (let i = 0; i < stringified.length; ++i) {
-        sum += parseInt(stringified[i]);
-    }
-    if (sum % 10 === 0) {
-        sumTen = true;
-    }
+
 
     if (n % 10 === 1 || n % 10 === 5) {
         endsInOneOrFive = true;
     }
 
     for (let i = 0; i < stringified.length; ++i) {
-        if (+stringified[i] % 3 === 0 || +stringified[i] % 5 === 0) {
-            continue;
-        } else {
-            multiplesFiveOrThree = false;
-            break;
+        if (+stringified[i] % 3 !== 0 && +stringified[i] % 5 !== 0) {
+            return true;
         }
     }
 
-    let count = 0;
+    multiplesFiveOrThree = stringified.split('').every(char => +char % 3 === 0 || +char % 5 === 0);
 
-    if (isPrime) count += 1;
-    if (sumTen) count += 1;
-    if (endsInOneOrFive) count += 1;
-    if (multiplesFiveOrThree) count += 1;
+    let count = isPrime + sumTen + endsInOneOrFive + multiplesFiveOrThree;
+
+    // if (isPrime) count += 1;
+    // if (sumTen) count += 1;
+    // if (endsInOneOrFive) count += 1;
+    // if (multiplesFiveOrThree) count += 1;
 
     console.log(isPrime, sumTen, endsInOneOrFive, multiplesFiveOrThree);
     console.log("COUNT: ", count);
