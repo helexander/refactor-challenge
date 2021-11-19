@@ -1,108 +1,32 @@
-// A number is interesting if it is has atleast 2 of the following:
-// prime,
-// ends in 1 or 5,
-// sum of digits is a multiple of 10,
-// all digits are multiples of 3 or 5
+import { allowedChar, isPrimeCheck } from "./modules/non-dom-manipulate.js";
+import { isInteresting } from "./modules/dom-manipulate.js";
 
-
-// Refactors made: 3
-
-// let button = document.querySelector("#submitButton");
-
-const isPrimeCheck = (n) => {
-    let isPrime = true;
-
-    for (let i = n - 1; i > 1; --i) {
-        if (n % i === 0) {
-            isPrime = false;
-            break
-        }
-    }
-
-    return isPrime;
-}
-
-function isInteresting(n) {
-
-    let sumTen = false;
-    let endsInOneOrFive = false;
-    let multiplesFiveOrThree = true;
-    let isPrime = isPrimeCheck(n);
-    // for (let i = n - 1; i > 1; --i) {
-    //     if (n % i === 0) {
-    //         isPrime = false;
-    //         break
-    //     }
-    // }
-
-    let sum = 0;
-    let stringified = n.toString();
-    for (let i = 0; i < stringified.length; ++i) {
-        sum += parseInt(stringified[i]);
-    }
-    if (sum % 10 === 0) {
-        sumTen = true;
-    }
-
-    if (n % 10 === 1 || n % 10 === 5) {
-        endsInOneOrFive = true;
-    }
-
-    for (let i = 0; i < stringified.length; ++i) {
-        if (+stringified[i] % 3 === 0 || +stringified[i] % 5 === 0) {
-            continue;
-        } else {
-            multiplesFiveOrThree = false;
-            break;
-        }
-    }
-
-    let count = 0;
-
-    if (isPrime) count += 1;
-    if (sumTen) count += 1;
-    if (endsInOneOrFive) count += 1;
-    if (multiplesFiveOrThree) count += 1;
-
-    console.log(isPrime, sumTen, endsInOneOrFive, multiplesFiveOrThree);
-    console.log("COUNT: ", count);
-
-    if (count > 1) {
-        return n + " is interesting";
-    } else if (count > 0) {
-        return n + " is okay";
-    } else {
-        return n + " is booooooring";
-    }
-}
-
-// document.addEventListener("click", () => {
 document.querySelector("#submitButton").addEventListener("click", () => {
-    let input = document.querySelector("#numberInput");
-    let value = parseInt(input.value);
+    let inputVal = document.querySelector("#numberInput").value;
+    let n = parseInt(inputVal);
 
-    let interesting = isInteresting(value);
+    const validCheck = allowedChar(n);
 
-    let output = document.querySelector("#output");
-    output.innerText = interesting;
+    if (!validCheck || inputVal === "") {
+        alert("This is not a valid input");
+    } else {
+        let output = document.querySelector("#output");
+        output.innerText = isInteresting(n);
+    }
 });
 
 document.querySelector("#primeButton").addEventListener("click", () => {
-    let input = document.querySelector("#primeInput");
-    let n = parseInt(input.value);
+    let inputVal = document.querySelector("#primeInput").value;
+    let n = parseInt(inputVal);
 
-    let isPrime = isPrimeCheck(n);
-    // for (let i = n - 1; i > 1; --i) {
-    //     if (n % i === 0) {
-    //         isPrime = false;
-    //         break
-    //     }
-    // }
+    const validCheck = allowedChar(n);
 
-    const output = document.querySelector("#primeOutput");
-    if (isPrime) {
-        output.innerHTML = n + " is prime!";
+    if (!validCheck || inputVal === "") {
+        alert("This is not a valid input");
     } else {
-        output.innerHTML = n + " is not prime!";
+        const output = document.querySelector("#primeOutput");
+        isPrimeCheck(n) ? output.innerHTML = n + " is prime!" : output.innerHTML = n + " is not prime!";
     }
 });
+
+
